@@ -6,8 +6,8 @@ const increment = () => {
 </script>
 
 <template>
-  <button @click="increment">count is: {{ count }}</button>
-  <MapboxMap
+  <button className="" @click="increment">count is: {{ count }}</button>
+  <!-- <MapboxMap
     map-id="{ID}"
     style="position: absolute; top: 0; bottom: 0; left: 250px; width: 500px"
     :options="{
@@ -15,5 +15,5 @@ const increment = () => {
       center: [-68.137343, 45.137451], // starting position
       zoom: 5, // starting zoom
     }"
-  />
+  /> -->
 </template>

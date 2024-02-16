@@ -5,12 +5,12 @@
     "node": true
   },
   "extends": [
-    // "plugin:vue/vue3-essential",
-    // "eslint:recommended",
-    // "@vue/typescript/recommended",
+    "plugin:vue/vue3-essential",
+    "eslint:recommended",
+    "@vue/typescript/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/vue",
+    // "prettier/@typescript-eslint",
+    // "prettier/vue",
     "@nuxt/eslint-config"
   ],
   "parserOptions": {
