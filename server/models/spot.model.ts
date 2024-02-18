@@ -22,7 +22,6 @@ const fishingSpotSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
     },
   },
   { timestamps: true },
@@ -30,6 +29,4 @@ const fishingSpotSchema = new mongoose.Schema(
 
 fishingSpotSchema.index({ coordinates: '2dsphere' });
 
-const FishingSpot = mongoose.model('FishingSpot', fishingSpotSchema);
-
-module.exports = FishingSpot;
+export const FishingSpot = mongoose.model('FishingSpot', fishingSpotSchema);
