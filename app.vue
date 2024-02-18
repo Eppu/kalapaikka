@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Counter />
-    <NuxtWelcome />
+    <Map />
+    <!-- <Counter /> -->
+    <!-- <NuxtWelcome /> -->
   </div>
 </template>
