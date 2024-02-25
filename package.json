@@ -13,6 +13,7 @@
     "format": "prettier --write '**/*.{ts,js,vue}'"
   },
   "dependencies": {
+    "date-fns": "^3.3.1",
     "flowbite": "^2.3.0",
     "nuxt": "^3.10.1",
     "vue": "^3.4.15",

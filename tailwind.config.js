@@ -9,7 +9,13 @@ export default {
     './node_modules/flowbite/**/*.{js,ts}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      minWidth: {
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
+      },
+    },
   },
   plugins: [require('flowbite/plugin')],
 };
