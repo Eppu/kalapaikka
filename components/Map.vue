@@ -1,6 +1,7 @@
 <template>
   <div style="height: 100vh; width: 100vw">
     <DetailsDrawer :selected-spot="selectedSpot" />
+    <Modal ref="myModal" />
     <LMap
       ref="map"
       :zoom="zoom"
@@ -56,6 +57,7 @@ const tooltipOptions = {
 
 const fishingSpots = ref([]);
 const selectedSpot = ref(null);
+const myModal = ref(null);
 
 const handleMarkerClick = (spot) => {
   console.log('clicked', spot);
@@ -64,6 +66,7 @@ const handleMarkerClick = (spot) => {
 
 const handleMapClick = (event) => {
   console.log('map clicked at point', event.latlng);
+  myModal.value.show();
 };
 
 onMounted(async () => {

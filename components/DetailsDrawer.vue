@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from 'vue';
+import { ref } from 'vue';
 import { format, parseISO } from 'date-fns';
 import { fi } from 'date-fns/locale';
 
