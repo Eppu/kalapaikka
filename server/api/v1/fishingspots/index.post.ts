@@ -21,7 +21,9 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const { name, description, coordinates, createdBy } = body;
+    const { name, description, coordinates } = body;
+
+    const createdBy = 'Sovelluksen käyttäjä';
 
     const newFishingSpot = new FishingSpot({
       name,
