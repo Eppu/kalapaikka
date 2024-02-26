@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt3-leaflet', 'nuxt-mongoose'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt3-leaflet', 'nuxt-mongoose', '@formkit/nuxt'],
   tailwindcss: {
     config: {},
     viewer: true,
@@ -12,5 +12,9 @@ export default defineNuxtConfig({
     options: {},
     modelsDir: 'server/models',
     devtools: true,
+  },
+  formkit: {
+    // Experimental support for auto loading
+    autoImport: false,
   },
 });

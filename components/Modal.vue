@@ -29,8 +29,10 @@
           </button>
         </div>
         <!-- Modal body -->
-        <div class="space-y-6 p-6">
-          <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+
+        <div class="space-y-6 p-6 pt-4">
+          <FormKit type="text" name="name" id="name" label="Nimi" placeholder="Kalapaikan nimi" />
+          <!-- <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
             With less than a month to go before the European Union enacts new consumer privacy laws for its citizens,
             companies around the world are updating their terms of service agreements to comply.
           </p>
@@ -38,7 +40,7 @@
             The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant
             to ensure a common set of data rights in the European Union. It requires organizations to notify users as
             soon as possible of high-risk data breaches that could personally affect them.
-          </p>
+          </p> -->
         </div>
         <!-- Modal footer -->
         <div
@@ -51,10 +53,11 @@
             I accept
           </button>
           <button
+            @click="hide"
             type="button"
             class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
           >
-            Decline
+            Peruuta
           </button>
         </div>
       </div>
