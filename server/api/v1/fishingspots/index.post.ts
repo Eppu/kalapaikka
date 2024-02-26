@@ -1,4 +1,4 @@
-import { FishingSpot } from '../../../models/spot.model';
+import { CreatedByType, FishingSpot } from '../../../models/spot.model';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
     const { name, description, coordinates } = body;
 
-    const createdBy = 'Sovelluksen käyttäjä';
+    const createdBy = CreatedByType.USER;
 
     const newFishingSpot = new FishingSpot({
       name,
@@ -31,8 +31,6 @@ export default defineEventHandler(async (event) => {
       coordinates,
       createdBy,
     });
-
-    console.log('newFishingSpot:', newFishingSpot);
 
     const savedSpot = await newFishingSpot.save();
 

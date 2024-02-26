@@ -44,8 +44,16 @@
       <h2 class="text-lg font-semibold text-gray-800">{{ selectedSpot.name }}</h2>
 
       <div class="mt-4">
+        <div v-if="selectedSpot.description" class="mb-4">
+          <h3 class="text-md font-semibold text-gray-800">Kuvaus</h3>
+          <p class="text-gray-600">{{ selectedSpot.description }}</p>
+        </div>
         <h3 class="text-md font-semibold text-gray-800">Koordinaatit</h3>
-        <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates }}</p>
+        <div class="flex items-center space-x-2">
+          <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
+          ,
+          <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[1] }}</p>
+        </div>
 
         <h3 class="text-md font-semibold text-gray-800">Lisätty</h3>
         <p class="text-gray-600">{{ formattedCreatedAt }}</p>

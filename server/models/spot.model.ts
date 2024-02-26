@@ -1,9 +1,15 @@
 import * as mongoose from 'mongoose';
 
+export enum CreatedByType {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
 const fishingSpotSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      required: true,
     },
     description: {
       type: String,
@@ -20,8 +26,9 @@ const fishingSpotSchema = new mongoose.Schema(
       },
     },
     createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      enum: [CreatedByType.USER, CreatedByType.ADMIN],
+      required: true,
     },
   },
   { timestamps: true },
