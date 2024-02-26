@@ -12,7 +12,6 @@
     >
       <LControlZoom position="bottomright" />
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base" />
-      <!-- Loop through markers and create a marker for each spot -->
       <LMarker
         v-for="spot in fishingSpots"
         :key="spot._id"
@@ -31,6 +30,23 @@
               {{ spot.name }}
             </h3>
             <p>{{ spot.createdAt }}</p>
+          </div>
+        </LTooltip>
+      </LMarker>
+
+      <!-- Draw a marker when the user clicks the map -->
+      <LMarker v-if="clickedSpot" :lat-lng="clickedSpot.coordinates.coordinates">
+        <LIcon iconUrl="/img/marker-icon-red.png" :icon-size="[25, 41]" :icon-anchor="[12.5, 41]" />
+        <LTooltip :options="{ permanent: true, direction: 'top', offset: [0, -41] }">
+          <div>
+            <h3
+              className="
+            text-md
+            font-semibold
+            text-gray-800"
+            >
+              Uusi kalapaikka
+            </h3>
           </div>
         </LTooltip>
       </LMarker>
@@ -58,6 +74,8 @@ const tooltipOptions = {
 const fishingSpots = ref([]);
 const selectedSpot = ref(null);
 const myModal = ref(null);
+const clickedSpot = ref(null);
+const modalVisible = useState('addModalVisible');
 
 const handleMarkerClick = (spot) => {
   console.log('clicked', spot);
@@ -67,7 +85,19 @@ const handleMarkerClick = (spot) => {
 const handleMapClick = (event) => {
   console.log('map clicked at point', event.latlng);
   myModal.value.show();
+  clickedSpot.value = {
+    coordinates: {
+      coordinates: [event.latlng.lat, event.latlng.lng],
+    },
+  };
 };
+
+// If Add modal is closed, remove the marker from the map
+watch(modalVisible, (newVal, oldVal) => {
+  if (!newVal) {
+    clickedSpot.value = null;
+  }
+});
 
 onMounted(async () => {
   // Fetch fishing spots from your API endpoint

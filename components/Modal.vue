@@ -1,5 +1,3 @@
-<!-- MyModal.vue -->
-
 <template>
   <div
     id="modalEl"
@@ -71,6 +69,7 @@ import { Modal } from 'flowbite';
 export default {
   setup() {
     const modalInstance = ref(null);
+    const visible = useState('addModalVisible', () => false);
 
     const show = () => {
       modalInstance.value.show();
@@ -85,15 +84,17 @@ export default {
 
       // options with default values
       const options = {
-        placement: 'center',
+        placement: 'bottom-center',
         backdrop: 'dynamic',
         backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
         closable: true,
         onHide: () => {
           console.log('modal is hidden');
+          visible.value = false;
         },
         onShow: () => {
           console.log('modal is shown');
+          visible.value = true;
         },
         onToggle: () => {
           console.log('modal has been toggled');
