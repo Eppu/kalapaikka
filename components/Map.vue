@@ -99,7 +99,7 @@ watch(modalVisible, (newVal, oldVal) => {
   }
 });
 
-watch(fishingSpots, (newVal, oldVal) => {
+watch(fishingSpots, () => {
   // When new spots are added, set the data-drawer-target and data-drawer-show attributes to the marker
   // This is a workaround, since Leaflet doesn't support adding data attributes to markers
   // It's ugly, but will work for now.

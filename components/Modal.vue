@@ -30,9 +30,8 @@
         </div>
         <!-- Modal body -->
 
-        <FormKit type="form" id="addFishingSpotForm" submit-label="Lisää" :actions="false" @submit="addFishingSpot">
-          <div class="space-y-6 p-6 pt-4">
-            <!-- Not using FormKit's Form here yet, since I need to figure out custom styling first -->
+        <div class="space-y-6 p-6 pt-4">
+          <FormKit type="form" id="addFishingSpotForm" submit-label="Lisää" :actions="false" @submit="addFishingSpot">
             <FormKit
               type="text"
               name="name"
@@ -42,29 +41,30 @@
               validation="required"
             />
             <FormKit type="textarea" name="description" id="description" label="Kuvaus" placeholder="Kuvaus" />
-          </div>
-          <!-- Modal footer -->
-          <div
-            class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600 rtl:space-x-reverse"
+          </FormKit>
+        </div>
+        <!-- Modal footer -->
+        <div
+          class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600 rtl:space-x-reverse"
+        >
+          <!-- TODO: Set up styling using the classes on the commented buttons below -->
+          <!-- <FormKit type="submit">Lisää</FormKit> -->
+          <!-- <FormKit type="button" @click="hide">Peruuta</FormKit> -->
+          <button
+            @click="this.$formkit.submit('addFishingSpotForm')"
+            type="button"
+            class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            <!-- TODO: Set up styling using the classes on the commented buttons below -->
-            <FormKit type="submit">Lisää</FormKit>
-            <!-- <button
-              @click="addFishingSpot"
-              type="button"
-              class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Lisää
-            </button>
-            <button
-              @click="hide"
-              type="button"
-              class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Peruuta
-            </button> -->
-          </div>
-        </FormKit>
+            Lisää
+          </button>
+          <button
+            @click="hide"
+            type="button"
+            class="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+          >
+            Peruuta
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -97,7 +97,6 @@ export default {
     const addFishingSpot = async (values) => {
       isSubmitting.value = true;
       const fishingSpots = useState('fishingSpots');
-      console.log('fishing spots before adding: ', fishingSpots.value);
       const { name, description } = values;
 
       const { data: responseData } = await useFetch('http://localhost:3000/api/v1/fishingspots', {
@@ -119,11 +118,9 @@ export default {
 
       // Push the new spot to the list of spots and close the modal
       fishingSpots.value.push(newSpot);
-
       // TODO: Due to the way DetailsDrawer is implemented, we can't open the drawer for the new spot immediately.
       // I'll need to rework DetailsDrawer to use object params for initialization, which makes the structure clearer anyways.
 
-      console.log('fishingSpots.value after adding: ', fishingSpots.value);
       isSubmitting.value = false;
       hide();
     };
