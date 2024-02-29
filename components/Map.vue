@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100vh; width: 100vw">
-    <DetailsDrawer :selected-spot="selectedSpot" />
+    <DetailsDrawer ref="detailsDrawer" />
     <Modal ref="myModal" />
     <LMap
       ref="map"
@@ -72,7 +72,7 @@ const tooltipOptions = {
 };
 
 const fishingSpots = useState('fishingSpots', () => []);
-const selectedSpot = ref(null);
+const selectedSpot = useState('selectedSpot', () => null);
 const myModal = ref(null);
 const clickedSpot = useState('clickedSpot', () => null);
 const modalVisible = useState('addModalVisible');
@@ -97,20 +97,6 @@ watch(modalVisible, (newVal, oldVal) => {
   if (!newVal) {
     clickedSpot.value = null;
   }
-});
-
-watch(fishingSpots, () => {
-  // When new spots are added, set the data-drawer-target and data-drawer-show attributes to the marker
-  // This is a workaround, since Leaflet doesn't support adding data attributes to markers
-  // It's ugly, but will work for now.
-  nextTick(() => {
-    const markers = document.querySelectorAll('.leaflet-marker-icon');
-    markers.forEach((marker) => {
-      marker.setAttribute('data-drawer-target', 'spot-details-drawer');
-      marker.setAttribute('data-drawer-show', 'spot-details-drawer');
-      initFlowbite();
-    });
-  });
 });
 
 onMounted(async () => {

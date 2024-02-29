@@ -114,9 +114,6 @@ export default {
 
       // Push the new spot to the list of spots and close the modal
       fishingSpots.value.push(newSpot);
-      // TODO: Due to the way DetailsDrawer is implemented, we can't open the drawer for the new spot immediately.
-      // I'll need to rework DetailsDrawer to use object params for initialization, which makes the structure clearer anyways.
-
       isSubmitting.value = false;
       hide();
     };

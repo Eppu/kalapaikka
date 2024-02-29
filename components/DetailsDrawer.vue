@@ -23,6 +23,7 @@
       Info
     </h5>
     <button
+      id="drawer-hide-button"
       type="button"
       data-drawer-hide="spot-details-drawer"
       aria-controls="spot-details-drawer"
@@ -66,12 +67,15 @@
 import { ref } from 'vue';
 import { format, parseISO } from 'date-fns';
 import { fi } from 'date-fns/locale';
+import { Drawer } from 'flowbite';
+
+const drawerInstance = ref(null);
 
 const props = defineProps({
   selectedSpot: Object,
 });
 
-const { selectedSpot } = toRefs(props);
+const selectedSpot = useState('selectedSpot');
 
 const formattedCreatedAt = ref('');
 
@@ -79,6 +83,44 @@ watch(selectedSpot, (newVal, oldVal) => {
   console.log('selectedSpot changed', newVal, oldVal);
   if (newVal) {
     formattedCreatedAt.value = format(parseISO(newVal.createdAt), 'd.M.yyyy', { locale: fi });
+    drawerInstance.value.show();
+  }
+});
+
+onMounted(() => {
+  console.log('DetailsDrawer mounted');
+  const targetEl = document.getElementById('spot-details-drawer');
+  const drawerHideButton = document.getElementById('drawer-hide-button');
+
+  const options = {
+    closeOnClickOutside: true,
+    closeOnEsc: true,
+    placement: 'left',
+    backdrop: true,
+    bodyScrolling: false,
+    edge: true,
+    backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
+    onHide: () => {
+      console.log('drawer is hidden');
+      selectedSpot.value = null;
+    },
+    onShow: () => {
+      console.log('drawer is shown');
+    },
+    onToggle: () => {
+      console.log('drawer has been toggled');
+    },
+  };
+  if (targetEl) {
+    /*
+     * targetEl: required
+     * options: optional
+     */
+    drawerInstance.value = new Drawer(targetEl, options);
+
+    drawerHideButton.addEventListener('click', () => {
+      drawerInstance.hide();
+    });
   }
 });
 </script>
