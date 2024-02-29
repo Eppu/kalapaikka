@@ -28,8 +28,8 @@
             <span class="sr-only">Sulje ikkuna</span>
           </button>
         </div>
-        <!-- Modal body -->
 
+        <!-- Modal body -->
         <div class="space-y-6 p-6 pt-4">
           <FormKit type="form" id="addFishingSpotForm" submit-label="Lisää" :actions="false" @submit="addFishingSpot">
             <FormKit
@@ -43,6 +43,7 @@
             <FormKit type="textarea" name="description" id="description" label="Kuvaus" placeholder="Kuvaus" />
           </FormKit>
         </div>
+
         <!-- Modal footer -->
         <div
           class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600 rtl:space-x-reverse"
@@ -80,11 +81,6 @@ export default {
     const visible = useState('addModalVisible', () => false);
     const isSubmitting = useState('isSubmitting', () => false);
     const clickedSpot = useState('clickedSpot');
-
-    const values = reactive({
-      name: '',
-      description: '',
-    });
 
     const show = () => {
       modalInstance.value.show();
