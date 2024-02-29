@@ -71,10 +71,10 @@ const tooltipOptions = {
   opacity: 0.95,
 };
 
-const fishingSpots = ref([]);
+const fishingSpots = useState('fishingSpots', () => []);
 const selectedSpot = ref(null);
 const myModal = ref(null);
-const clickedSpot = ref(null);
+const clickedSpot = useState('clickedSpot', () => null);
 const modalVisible = useState('addModalVisible');
 
 const handleMarkerClick = (spot) => {
@@ -99,24 +99,26 @@ watch(modalVisible, (newVal, oldVal) => {
   }
 });
 
+watch(fishingSpots, (newVal, oldVal) => {
+  // When new spots are added, set the data-drawer-target and data-drawer-show attributes to the marker
+  // This is a workaround, since Leaflet doesn't support adding data attributes to markers
+  // It's ugly, but will work for now.
+  nextTick(() => {
+    const markers = document.querySelectorAll('.leaflet-marker-icon');
+    markers.forEach((marker) => {
+      marker.setAttribute('data-drawer-target', 'spot-details-drawer');
+      marker.setAttribute('data-drawer-show', 'spot-details-drawer');
+      initFlowbite();
+    });
+  });
+});
+
 onMounted(async () => {
   // Fetch fishing spots from your API endpoint
   try {
     const response = await fetch('http://localhost:3000/api/v1/fishingspots');
     const data = await response.json();
     fishingSpots.value = data;
-
-    // wait for a tick and add a class to the markers
-    // this is a workaround, since Leaflet doesn't support adding data attributes to markers
-    // it's ugly, but will work for now.
-    nextTick(() => {
-      const markers = document.querySelectorAll('.leaflet-marker-icon');
-      markers.forEach((marker) => {
-        marker.setAttribute('data-drawer-target', 'spot-details-drawer');
-        marker.setAttribute('data-drawer-show', 'spot-details-drawer');
-      });
-      initFlowbite();
-    });
   } catch (error) {
     console.error('Error fetching fishing spots', error);
   }

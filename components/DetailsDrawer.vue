@@ -72,6 +72,7 @@ const props = defineProps({
 });
 
 const { selectedSpot } = toRefs(props);
+console.log('selected spot is', selectedSpot);
 
 const formattedCreatedAt = ref('');
 
