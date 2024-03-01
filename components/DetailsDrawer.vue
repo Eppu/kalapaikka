@@ -119,7 +119,7 @@ onMounted(() => {
     drawerInstance.value = new Drawer(targetEl, options);
 
     drawerHideButton.addEventListener('click', () => {
-      drawerInstance.hide();
+      drawerInstance.value.hide();
     });
   }
 });

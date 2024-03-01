@@ -102,7 +102,7 @@ watch(modalVisible, (newVal, oldVal) => {
 onMounted(async () => {
   // Fetch fishing spots from your API endpoint
   try {
-    const response = await fetch('http://localhost:3000/api/v1/fishingspots');
+    const response = await fetch('/api/v1/fishingspots');
     const data = await response.json();
     fishingSpots.value = data;
   } catch (error) {

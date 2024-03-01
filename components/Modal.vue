@@ -95,7 +95,7 @@ export default {
       const fishingSpots = useState('fishingSpots');
       const { name, description } = values;
 
-      const { data: responseData } = await useFetch('http://localhost:3000/api/v1/fishingspots', {
+      const { data: responseData } = await useFetch('/api/v1/fishingspots', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
