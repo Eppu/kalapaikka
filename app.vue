@@ -4,12 +4,13 @@
   </div>
 </template>
 
-<script setup>
-import { onMounted } from 'vue';
-import { initFlowbite } from 'flowbite';
-
-// initialize components based on data attribute selectors
-// onMounted(() => {
-//   initFlowbite();
-// });
+<script setup lang="ts">
+useSeoMeta({
+  title: 'Kalapaikka',
+  ogTitle: 'Kalapaikka',
+  description: 'Selaa parhaita kalastuspaikkoja ja jaa vinkkejä muiden harrastajien kanssa.',
+  ogDescription: 'Selaa parhaita kalastuspaikkoja ja jaa vinkkejä muiden harrastajien kanssa.',
+  // ogImage: 'https://example.com/image.png',
+  // twitterCard: 'summary_large_image',
+});
 </script>
