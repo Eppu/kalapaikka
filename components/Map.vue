@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh; width: 100vw">
+  <div class="h-[calc(100dvh)] w-full">
     <DetailsDrawer ref="detailsDrawer" />
     <Modal ref="myModal" />
     <LMap
