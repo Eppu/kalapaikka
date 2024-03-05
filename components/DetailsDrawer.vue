@@ -62,6 +62,7 @@
 
       <h2 class="mt-8 text-lg font-semibold text-gray-800">Kommentit</h2>
       <div class="mt-4">
+        <CommentForm />
         <Spinner v-if="isLoading" />
         <p v-else-if="!isLoading && selectedSpot.comments.length === 0" class="text-gray-600">Ei kommentteja</p>
         <Comment v-for="comment in selectedSpot.comments" :key="comment._id" :comment="comment" />
