@@ -14,21 +14,6 @@
       {{ props.comment.text }}
     </p>
   </article>
-  <article class="max-w-96 rounded-lg bg-white text-base dark:bg-gray-900">
-    <footer class="mb-2 flex items-center justify-between">
-      <div class="flex items-center">
-        <p class="mr-3 inline-flex items-center text-sm font-semibold text-gray-900 dark:text-white">
-          {{ props.comment.createdBy }}
-        </p>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          <time>{{ formattedCreatedAt }} </time>
-        </p>
-      </div>
-    </footer>
-    <p class="text-gray-500 dark:text-gray-400">
-      {{ props.comment.text }}
-    </p>
-  </article>
 </template>
 
 <script setup lang="ts">
