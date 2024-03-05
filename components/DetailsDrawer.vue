@@ -59,6 +59,14 @@
         <h3 class="text-md font-semibold text-gray-800">Lisätty</h3>
         <p class="text-gray-600">{{ formattedCreatedAt }}</p>
       </div>
+
+      <h2 class="mt-8 text-lg font-semibold text-gray-800">Kommentit</h2>
+      <div class="mt-4">
+        <CommentForm />
+        <Spinner v-if="isLoading" />
+        <p v-else-if="!isLoading && selectedSpot.comments.length === 0" class="text-gray-600">Ei kommentteja</p>
+        <Comment v-for="comment in selectedSpot.comments" :key="comment._id" :comment="comment" />
+      </div>
     </div>
   </div>
 </template>
@@ -78,12 +86,36 @@ const props = defineProps({
 const selectedSpot = useState('selectedSpot');
 
 const formattedCreatedAt = ref('');
+const isLoading = ref(false);
+
+async function fetchSpotComments(spotId) {
+  console.log('fetching spot comments...');
+  const response = await fetch(`/api/v1/comments/${spotId}`);
+  const data = await response.json();
+  return data;
+}
 
 watch(selectedSpot, (newVal, oldVal) => {
   console.log('selectedSpot changed', newVal, oldVal);
   if (newVal) {
     formattedCreatedAt.value = format(parseISO(newVal.createdAt), 'd.M.yyyy', { locale: fi });
     drawerInstance.value.show();
+  }
+});
+
+watchEffect(async () => {
+  if (selectedSpot.value) {
+    console.log('selectedSpot.value changed in watchEffect');
+    isLoading.value = true;
+    try {
+      const comments = await fetchSpotComments(selectedSpot.value._id);
+      console.log('comments', comments);
+      selectedSpot.value.comments = comments;
+      isLoading.value = false;
+    } catch (error) {
+      console.error('Error fetching comments', error);
+      isLoading.value = false;
+    }
   }
 });
 
