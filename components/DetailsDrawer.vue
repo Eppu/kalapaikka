@@ -74,7 +74,7 @@
 <script setup>
 import { ref } from 'vue';
 import { format, parseISO } from 'date-fns';
-import { fi, is } from 'date-fns/locale';
+import { fi } from 'date-fns/locale';
 import { Drawer } from 'flowbite';
 
 const drawerInstance = ref(null);
