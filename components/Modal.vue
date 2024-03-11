@@ -12,6 +12,7 @@
         <div class="flex items-start justify-between rounded-t border-b p-5 dark:border-gray-600">
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white lg:text-2xl">Lisää uusi kalapaikka</h3>
           <button
+            id="modal-close-button"
             type="button"
             class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
             @click="hide"
@@ -72,106 +73,78 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue';
 import { Modal } from 'flowbite';
 
-export default {
-  setup() {
-    const modalInstance = ref(null);
-    const visible = useState('addModalVisible', () => false);
-    const isSubmitting = useState('isSubmitting', () => false);
-    const clickedSpot = useState('clickedSpot');
-    const errorMessage = ref('');
+const modalInstance = ref(null);
+const clickedSpot = useState('clickedSpot');
 
-    const show = () => {
-      modalInstance.value.show();
-    };
+watch(clickedSpot, (newValue) => {
+  console.log('clickedSpot changed', newValue);
+  if (newValue) {
+    modalInstance.value.show();
+  }
+});
 
-    const hide = () => {
-      errorMessage.value = '';
-      modalInstance.value.hide();
-    };
+const addFishingSpot = async (values) => {
+  console.log('Adding fishing spot', values);
+  const { name, description } = values;
+  const response = await $fetch('/api/v1/fishingspots', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name: name,
+      description: description,
+      coordinates: {
+        type: 'Point',
+        coordinates: clickedSpot.value.coordinates.coordinates,
+      },
+    }),
+  });
 
-    const addFishingSpot = async (values) => {
-      isSubmitting.value = true;
-      errorMessage.value = '';
-      const fishingSpots = useState('fishingSpots');
-      const { name, description } = values;
+  console.log('modal response', response);
+  if (response.statusCode !== 201) {
+    console.error('Failed to add fishing spot', response);
+    return;
+  }
 
-      const response = await $fetch('/api/v1/fishingspots', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-          description: description,
-          coordinates: {
-            type: 'Point',
-            coordinates: clickedSpot.value.coordinates.coordinates,
-          },
-        }),
-      });
-
-      console.log('modal response', response);
-      if (response.statusCode !== 201) {
-        isSubmitting.value = false;
-        errorMessage.value = 'Kalapaikan lisäyksessä tapahtui virhe. Yritä hetken päästä uudelleen.';
-        console.error('Failed to add fishing spot', response);
-        return;
-      }
-
-      const newSpot = response.body;
-
-      // Push the new spot to the list of spots and close the modal
-      fishingSpots.value.push(newSpot);
-      isSubmitting.value = false;
-      hide();
-    };
-
-    const initModal = () => {
-      const targetEl = document.getElementById('modalEl');
-
-      // options with default values
-      const options = {
-        placement: 'bottom-center',
-        backdrop: 'dynamic',
-        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
-        closable: true,
-        onHide: () => {
-          console.log('modal is hidden');
-          visible.value = false;
-        },
-        onShow: () => {
-          console.log('modal is shown');
-          visible.value = true;
-        },
-        onToggle: () => {
-          console.log('modal has been toggled');
-        },
-      };
-
-      // instance options object
-      const instanceOptions = {
-        id: 'modalEl',
-        override: true,
-      };
-
-      // Create a new Modal object based on the options
-      modalInstance.value = new Modal(targetEl, options, instanceOptions);
-    };
-
-    return {
-      show,
-      hide,
-      initModal,
-      addFishingSpot,
-      errorMessage,
-    };
-  },
-  mounted() {
-    this.initModal();
-  },
+  const newSpot = response.body;
+  const fishingSpots = useState('fishingSpots');
+  fishingSpots.value.push(newSpot);
+  modalInstance.value.hide();
 };
+
+onMounted(() => {
+  console.log('Modal mounted');
+  const targetEl = document.getElementById('modalEl');
+  const modalCloseButton = document.getElementById('modal-close-button');
+
+  const options = {
+    placement: 'bottom-center',
+    backdrop: 'dynamic',
+    backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+    closable: true,
+    onHide: () => {
+      console.log('modal is hidden');
+      clickedSpot.value = null;
+    },
+    onShow: () => {
+      console.log('modal is shown');
+    },
+    onToggle: () => {
+      console.log('modal has been toggled');
+    },
+  };
+
+  if (targetEl) {
+    modalInstance.value = new Modal(targetEl, options);
+
+    modalCloseButton.addEventListener('click', () => {
+      modalInstance.value.hide();
+    });
+  }
+});
 </script>

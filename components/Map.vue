@@ -1,7 +1,7 @@
 <template>
   <div class="h-[calc(100dvh)] w-full">
-    <DetailsDrawer ref="detailsDrawer" />
-    <Modal ref="myModal" />
+    <DetailsDrawer />
+    <Modal />
     <LMap
       ref="map"
       :zoom="zoom"
@@ -80,7 +80,7 @@ const tooltipOptions = {
 
 const fishingSpots = useState('fishingSpots', () => []);
 const selectedSpot = useState('selectedSpot', () => null);
-const myModal = ref(null);
+// const myModal = ref(null);
 const clickedSpot = useState('clickedSpot', () => null);
 const modalVisible = useState('addModalVisible');
 
@@ -91,7 +91,6 @@ const handleMarkerClick = (spot) => {
 
 const handleMapClick = (event) => {
   console.log('map clicked at point', event.latlng);
-  myModal.value.show();
   clickedSpot.value = {
     coordinates: {
       coordinates: [event.latlng.lat, event.latlng.lng],
