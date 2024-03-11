@@ -23,12 +23,18 @@ export default defineEventHandler(async (event) => {
 
     const { name, description, coordinates } = body;
 
+    // Flip coordinates to match GeoJSON format
+    const flippedCoordinates = {
+      ...coordinates,
+      coordinates: [coordinates.coordinates[1], coordinates.coordinates[0]],
+    };
+
     const createdBy = CreatedByType.USER;
 
     const newFishingSpot = new FishingSpot({
       name,
       description,
-      coordinates,
+      coordinates: flippedCoordinates,
       createdBy,
     });
 
@@ -36,13 +42,13 @@ export default defineEventHandler(async (event) => {
 
     return {
       statusCode: 201,
-      body: JSON.stringify(savedSpot),
+      body: savedSpot,
     };
   } catch (error) {
     console.error('Error creating fishing spot:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: { error: 'Internal Server Error' },
     };
   }
 });

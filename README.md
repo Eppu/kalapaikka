@@ -20,6 +20,10 @@ yarn install
 bun install
 ```
 
+## Notes
+
+Since this project uses MongoDB to store geographical points, we have to store coordinates in `[lon, lat]` instead of `[lat, lon]`. However, Leaflet uses `[lat, lon]` to display the points on the map. Therefore, we have to reverse the coordinates when displaying them on the map. This is currently done wherever coordinate data is rendered, but other options could be better.
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:

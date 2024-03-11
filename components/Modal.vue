@@ -42,6 +42,7 @@
             />
             <FormKit type="textarea" name="description" id="description" label="Kuvaus" placeholder="Kuvaus" />
           </FormKit>
+          <p v-if="errorMessage" class="text-sm text-red-600 dark:text-red-400">{{ errorMessage }}</p>
         </div>
 
         <!-- Modal footer -->
@@ -81,21 +82,24 @@ export default {
     const visible = useState('addModalVisible', () => false);
     const isSubmitting = useState('isSubmitting', () => false);
     const clickedSpot = useState('clickedSpot');
+    const errorMessage = ref('');
 
     const show = () => {
       modalInstance.value.show();
     };
 
     const hide = () => {
+      errorMessage.value = '';
       modalInstance.value.hide();
     };
 
     const addFishingSpot = async (values) => {
       isSubmitting.value = true;
+      errorMessage.value = '';
       const fishingSpots = useState('fishingSpots');
       const { name, description } = values;
 
-      const { data: responseData } = await useFetch('/api/v1/fishingspots', {
+      const response = await $fetch('/api/v1/fishingspots', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +114,15 @@ export default {
         }),
       });
 
-      const newSpot = JSON.parse(responseData.value.body);
+      console.log('modal response', response);
+      if (response.statusCode !== 201) {
+        isSubmitting.value = false;
+        errorMessage.value = 'Kalapaikan lisäyksessä tapahtui virhe. Yritä hetken päästä uudelleen.';
+        console.error('Failed to add fishing spot', response);
+        return;
+      }
+
+      const newSpot = response.body;
 
       // Push the new spot to the list of spots and close the modal
       fishingSpots.value.push(newSpot);
@@ -155,6 +167,7 @@ export default {
       hide,
       initModal,
       addFishingSpot,
+      errorMessage,
     };
   },
   mounted() {
