@@ -51,9 +51,9 @@
         </div>
         <h3 class="text-md font-semibold text-gray-800">Koordinaatit</h3>
         <div class="flex items-center space-x-2">
-          <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
-          ,
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[1] }}</p>
+          ,
+          <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
         </div>
 
         <h3 class="text-md font-semibold text-gray-800">Lisätty</h3>

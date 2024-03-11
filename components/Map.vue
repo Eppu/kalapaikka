@@ -11,11 +11,17 @@
       @click="handleMapClick($event)"
     >
       <LControlZoom position="bottomright" />
+      <!-- TODO: Consider adding these to the tile layer to limit how much of the map is rendered -->
+      <!-- :no-wrap="true"
+        :bounds="[
+          [-90, -180],
+          [90, 180],
+        ]" -->
       <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base" />
       <LMarker
         v-for="spot in fishingSpots"
         :key="spot._id"
-        :lat-lng="spot.coordinates.coordinates"
+        :lat-lng="[spot.coordinates.coordinates[1], spot.coordinates.coordinates[0]]"
         @click="() => handleMarkerClick(spot)"
         ref="markers"
       >
@@ -62,6 +68,7 @@ const zoom = ref(6);
 const mapOptions = {
   zoomControl: false,
   attributionControl: false, // TODO: See if hiding is really necessary or not, especially on desktop
+  worldCopyJump: true,
 };
 
 const tooltipOptions = {
