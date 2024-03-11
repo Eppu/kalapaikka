@@ -79,10 +79,6 @@ import { Drawer } from 'flowbite';
 
 const drawerInstance = ref(null);
 
-const props = defineProps({
-  selectedSpot: Object,
-});
-
 const selectedSpot = useState('selectedSpot');
 
 const formattedCreatedAt = ref('');
