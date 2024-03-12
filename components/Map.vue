@@ -1,5 +1,6 @@
 <template>
-  <div class="h-[calc(100dvh)] w-full">
+  jee jee
+  <div class="map-container h-[calc(100dvh)] w-full">
     <DetailsDrawer />
     <Modal />
     <LMap
