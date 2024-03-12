@@ -74,13 +74,6 @@ const mapOptions = {
   worldCopyJump: true,
 };
 
-const tooltipOptions = {
-  direction: 'top',
-  // center the offset on the marker
-  offset: [-15, -15],
-  opacity: 0.95,
-};
-
 const fishingSpots = useState('fishingSpots', () => []);
 const selectedSpot = useState('selectedSpot', () => null);
 const clickedSpot = useState('clickedSpot', () => null);
