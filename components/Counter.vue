@@ -6,14 +6,5 @@ const increment = () => {
 </script>
 
 <template>
-  <button className="" @click="increment">count is: {{ count }}</button>
-  <!-- <MapboxMap
-    map-id="{ID}"
-    style="position: absolute; top: 0; bottom: 0; left: 250px; width: 500px"
-    :options="{
-      style: 'mapbox://styles/mapbox/light-v11', // style URL
-      center: [-68.137343, 45.137451], // starting position
-      zoom: 5, // starting zoom
-    }"
-  /> -->
+  <button class="counter" @click="increment">count is: {{ count }}</button>
 </template>

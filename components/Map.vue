@@ -1,5 +1,4 @@
 <template>
-  jee jee
   <div class="map-container h-[calc(100dvh)] w-full">
     <DetailsDrawer />
     <Modal />
@@ -8,7 +7,7 @@
       :zoom="zoom"
       :center="[64.89092, 25.92773]"
       :options="mapOptions"
-      className="z-0"
+      className="z-0 leaflet-map"
       @click="handleMapClick($event)"
     >
       <LControlZoom position="bottomright" />

@@ -3,8 +3,8 @@ import Vue from '@vitejs/plugin-vue';
 
 export default defineVitestConfig({
   //   plugins: [Vue()],
-  //   test: {
-  //     globals: true,
-  //     environment: 'nuxt',
-  //   },
+  test: {
+    globals: true,
+    environment: 'nuxt',
+  },
 });
