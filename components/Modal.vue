@@ -79,6 +79,7 @@ import { Modal } from 'flowbite';
 
 const modalInstance = ref(null);
 const clickedSpot = useState('clickedSpot');
+const errorMessage = ref(null);
 
 watch(clickedSpot, (newValue) => {
   console.log('clickedSpot changed', newValue);
@@ -86,6 +87,10 @@ watch(clickedSpot, (newValue) => {
     modalInstance.value.show();
   }
 });
+
+const hide = () => {
+  modalInstance.value.hide();
+};
 
 const addFishingSpot = async (values) => {
   console.log('Adding fishing spot', values);
@@ -108,6 +113,7 @@ const addFishingSpot = async (values) => {
   console.log('modal response', response);
   if (response.statusCode !== 201) {
     console.error('Failed to add fishing spot', response);
+    errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.';
     return;
   }
 
@@ -130,6 +136,7 @@ onMounted(() => {
     onHide: () => {
       console.log('modal is hidden');
       clickedSpot.value = null;
+      errorMessage.value = null;
     },
     onShow: () => {
       console.log('modal is shown');
