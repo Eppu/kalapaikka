@@ -35,7 +35,7 @@
             >
               {{ spot.name }}
             </h3>
-            <p>{{ spot.createdAt }}</p>
+            <!-- <p>{{ spot.createdAt }}</p> -->
           </div>
         </LTooltip>
       </LMarker>
@@ -63,8 +63,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
+import { getZoomOffset } from '~/utils/mapUtils';
 
 const zoom = ref(6);
+const map = ref(null);
+
 const mapOptions = {
   zoomControl: false,
   attributionControl: false, // TODO: See if hiding is really necessary or not, especially on desktop
@@ -80,7 +83,6 @@ const tooltipOptions = {
 
 const fishingSpots = useState('fishingSpots', () => []);
 const selectedSpot = useState('selectedSpot', () => null);
-// const myModal = ref(null);
 const clickedSpot = useState('clickedSpot', () => null);
 const modalVisible = useState('addModalVisible');
 
@@ -96,6 +98,10 @@ const handleMapClick = (event) => {
       coordinates: [event.latlng.lat, event.latlng.lng],
     },
   };
+
+  const zoomLevel = map.value.leafletObject.getZoom();
+  const verticalOffset = getZoomOffset(zoomLevel);
+  map.value.leafletObject.flyTo([event.latlng.lat - verticalOffset, event.latlng.lng]);
 };
 
 // If Add modal is closed, remove the marker from the map
