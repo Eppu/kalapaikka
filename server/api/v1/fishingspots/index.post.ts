@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const { name, description, coordinates } = body;
+    const { name, description, coordinates, province } = body;
 
     // Flip coordinates to match GeoJSON format
     const flippedCoordinates = {
@@ -35,10 +35,13 @@ export default defineEventHandler(async (event) => {
       name,
       description,
       coordinates: flippedCoordinates,
+      province,
       createdBy,
     });
 
     const savedSpot = await newFishingSpot.save();
+
+    console.log('Successfully created a new spot', savedSpot);
 
     return {
       statusCode: 201,

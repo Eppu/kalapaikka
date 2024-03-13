@@ -5,6 +5,29 @@ export enum CreatedByType {
   ADMIN = 'admin',
 }
 
+export enum Province {
+  AHVENANMAA = 'Ahvenanmaa',
+  ETELÄ_KARJALA = 'Etelä-Karjala',
+  ETELÄ_POHJANMAA = 'Etelä-Pohjanmaa',
+  ETELÄ_SAVO = 'Etelä-Savo',
+  KAINUU = 'Kainuu',
+  KANTA_HÄME = 'Kanta-Häme',
+  KESKI_POHJANMAA = 'Keski-Pohjanmaa',
+  KESKI_SUOMI = 'Keski-Suomi',
+  KYMENLAAKSO = 'Kymenlaakso',
+  LAPPI = 'Lappi',
+  PIRKANMAA = 'Pirkanmaa',
+  POHJANMAA = 'Pohjanmaa',
+  POHJOIS_KARJALA = 'Pohjois-Karjala',
+  POHJOIS_POHJANMAA = 'Pohjois-Pohjanmaa',
+  POHJOIS_SAVO = 'Pohjois-Savo',
+  PÄIJAT_HÄME = 'Päijät-Häme',
+  SATAKUNTA = 'Satakunta',
+  UUSIMAA = 'Uusimaa',
+  VARSINAIS_SUOMI = 'Varsinais-Suomi',
+  MUU = 'Muu',
+}
+
 const fishingSpotSchema = new mongoose.Schema(
   {
     name: {
@@ -24,6 +47,11 @@ const fishingSpotSchema = new mongoose.Schema(
         type: [Number],
         required: true,
       },
+    },
+    province: {
+      type: String,
+      enum: Object.values(Province),
+      required: true,
     },
     createdBy: {
       type: String,

@@ -49,6 +49,10 @@
           <h3 class="text-md font-semibold text-gray-800">Kuvaus</h3>
           <p class="text-gray-600">{{ selectedSpot.description }}</p>
         </div>
+
+        <h3 class="text-md mt-2 font-semibold text-gray-800">Maakunta</h3>
+        <p class="text-gray-600">{{ selectedSpot.province }}</p>
+
         <h3 class="text-md font-semibold text-gray-800">Koordinaatit</h3>
         <div class="flex items-center space-x-2">
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[1] }}</p>
@@ -56,7 +60,7 @@
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
         </div>
 
-        <h3 class="text-md font-semibold text-gray-800">Lisätty</h3>
+        <h3 class="text-md mt-2 font-semibold text-gray-800">Lisätty</h3>
         <p class="text-gray-600">{{ formattedCreatedAt }}</p>
       </div>
 
