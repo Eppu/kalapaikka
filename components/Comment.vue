@@ -6,7 +6,7 @@
           {{ props.comment.createdBy }}
         </p>
         <p class="text-sm text-gray-600 dark:text-gray-400">
-          <time>{{ formattedCreatedAt }} </time>
+          <time>{{ format(new Date(props.comment.createdAt), 'd.M.yyyy HH:mm:ss', { locale: fi }) }} </time>
         </p>
       </div>
     </footer>
@@ -25,6 +25,4 @@ const props = defineProps({
     required: true,
   },
 });
-
-const formattedCreatedAt = format(new Date(props.comment.createdAt), 'd.M.yyyy HH:mm:ss', { locale: fi });
 </script>

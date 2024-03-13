@@ -61,7 +61,7 @@
         </div>
 
         <h3 class="text-md mt-2 font-semibold text-gray-800">Lisätty</h3>
-        <p class="text-gray-600">{{ formattedCreatedAt }}</p>
+        <p class="text-gray-600">{{ format(parseISO(selectedSpot.createdAt), 'd.M.yyyy', { locale: fi }) }}</p>
       </div>
 
       <h2 class="mt-8 text-lg font-semibold text-gray-800">Kommentit</h2>
@@ -82,10 +82,7 @@ import { fi } from 'date-fns/locale';
 import { Drawer } from 'flowbite';
 
 const drawerInstance = ref(null);
-
 const selectedSpot = useState('selectedSpot');
-
-const formattedCreatedAt = ref('');
 const isLoading = ref(false);
 
 async function fetchSpotComments(spotId) {
@@ -98,7 +95,6 @@ async function fetchSpotComments(spotId) {
 watch(selectedSpot, (newVal, oldVal) => {
   console.log('selectedSpot changed', newVal, oldVal);
   if (newVal) {
-    formattedCreatedAt.value = format(parseISO(newVal.createdAt), 'd.M.yyyy', { locale: fi });
     drawerInstance.value.show();
   }
 });
