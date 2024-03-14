@@ -1,6 +1,13 @@
-<template>
+<!-- <template>
   <div>
     <Map />
+  </div>
+</template> -->
+<template>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 

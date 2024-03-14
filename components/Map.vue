@@ -1,5 +1,5 @@
 <template>
-  <div class="h-[calc(100dvh)] w-full">
+  <div class="h-full w-full">
     <DetailsDrawer />
     <Modal />
     <LMap
@@ -64,6 +64,7 @@
 import { ref, onMounted } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { getZoomOffset } from '~/utils/mapUtils';
+import AlertBar from './AlertBar.vue';
 
 const zoom = ref(6);
 const map = ref(null);
