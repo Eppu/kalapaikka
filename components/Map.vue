@@ -35,7 +35,6 @@
             >
               {{ spot.name }}
             </h3>
-            <!-- <p>{{ spot.createdAt }}</p> -->
           </div>
         </LTooltip>
       </LMarker>
