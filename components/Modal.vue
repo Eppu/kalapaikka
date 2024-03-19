@@ -85,10 +85,11 @@
 import { ref } from 'vue';
 import { Modal } from 'flowbite';
 import { provinceOptions } from '~/utils/formUtils';
+import { reset } from '@formkit/core';
 
 const modalInstance = ref(null);
 const clickedSpot = useState('clickedSpot');
-const errorMessage = ref(null);
+const errorMessage = ref('');
 
 watch(clickedSpot, (newValue) => {
   console.log('clickedSpot changed', newValue);
@@ -103,6 +104,7 @@ const hide = () => {
 
 const addFishingSpot = async (values) => {
   console.log('Adding fishing spot', values);
+  errorMessage.value = '';
   const { name, description, province } = values;
   const response = await $fetch('/api/v1/fishingspots', {
     method: 'POST',
@@ -123,7 +125,9 @@ const addFishingSpot = async (values) => {
   console.log('modal response', response);
   if (response.statusCode !== 201) {
     console.error('Failed to add fishing spot', response);
-    errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.';
+    response.statusCode === 429
+      ? (errorMessage.value = 'Lisäät kalapaikkoja liian nopeasti! Yritä hetken kuluttua uudelleen.')
+      : (errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.');
     return;
   }
 
@@ -131,6 +135,7 @@ const addFishingSpot = async (values) => {
   const fishingSpots = useState('fishingSpots');
   fishingSpots.value.push(newSpot);
   modalInstance.value.hide();
+  reset('addFishingSpotForm');
 };
 
 onMounted(() => {

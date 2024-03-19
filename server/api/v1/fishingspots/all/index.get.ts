@@ -1,4 +1,4 @@
-import { FishingSpot } from '../../../models/spot.model';
+import { FishingSpot } from '../../../../models/spot.model';
 
 interface FishingSpot {
   name: string;

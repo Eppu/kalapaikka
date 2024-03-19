@@ -41,6 +41,8 @@
 </template>
 
 <script setup>
+import { reset } from '@formkit/core';
+
 const selectedSpot = useState('selectedSpot');
 const showForm = ref(false);
 const isSubmittingForm = ref(false);
@@ -50,6 +52,7 @@ const selectedSpotId = computed(() => selectedSpot.value?._id);
 
 const addComment = async (formData) => {
   isSubmittingForm.value = true;
+  errorMessage.value = '';
   const comment = {
     ...formData,
     spotId: selectedSpotId.value,
@@ -64,10 +67,15 @@ const addComment = async (formData) => {
     body: JSON.stringify(comment),
   });
 
+  console.log('COMMENT FORM RESPONSE', response);
+
   if (response.statusCode !== 201) {
     console.error('Failed to add comment', response);
     isSubmittingForm.value = false;
-    errorMessage.value = 'Kommentin lisäys epäonnistui. Yritä hetken päästä uudelleen.';
+    response.statusCode === 429
+      ? (errorMessage.value = 'Kommentoit liian nopeasti! Yritä hetken päästä uudelleen.')
+      : (errorMessage.value = 'Kommentin lisäys epäonnistui. Yritä hetken päästä uudelleen.');
+
     return;
   }
 
@@ -75,5 +83,6 @@ const addComment = async (formData) => {
   selectedSpot.value.comments.push(data);
   isSubmittingForm.value = false;
   showForm.value = false;
+  reset('addCommentForm');
 };
 </script>

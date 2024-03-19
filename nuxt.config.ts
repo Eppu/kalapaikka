@@ -19,7 +19,26 @@ export default defineNuxtConfig({
       xFrameOptions: 'DENY',
     },
   },
-
+  routeRules: {
+    '/api/v1/comments/': {
+      security: {
+        rateLimiter: {
+          tokensPerInterval: 10,
+          interval: '10000',
+          throwError: false,
+        },
+      },
+    },
+    '/api/v1/fishingspots/': {
+      security: {
+        rateLimiter: {
+          tokensPerInterval: 3,
+          interval: '10000',
+          throwError: false,
+        },
+      },
+    },
+  },
   tailwindcss: {
     config: {},
     viewer: true,
