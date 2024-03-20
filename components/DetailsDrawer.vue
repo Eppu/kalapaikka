@@ -42,7 +42,29 @@
     </button>
     <!-- Show information about the currently selected spot -->
     <div v-if="selectedSpot" class="mt-4">
-      <h2 class="text-lg font-semibold text-gray-800">{{ selectedSpot.name }}</h2>
+      <!-- <a href="" class="inline-flex items-center font-medium hover:underline"> -->
+      <NuxtLink
+        :to="`/paikka/${selectedSpot._id}/${slug}`"
+        class="inline-flex items-center font-medium hover:underline"
+      >
+        <h2 class="text-lg font-semibold text-gray-800">{{ selectedSpot.name }}</h2>
+        <svg
+          class="ms-1 h-2 w-2 -rotate-45"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9"
+          />
+        </svg>
+        <!-- </a> -->
+      </NuxtLink>
 
       <div class="mt-4">
         <div v-if="selectedSpot.description" class="mb-4">
@@ -59,6 +81,7 @@
           ,
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
         </div>
+
         <a
           :href="
             'https://www.google.com/maps/dir/?api=1&destination=' +
@@ -95,10 +118,18 @@ import { ref } from 'vue';
 import { format, parseISO } from 'date-fns';
 import { fi } from 'date-fns/locale';
 import { Drawer } from 'flowbite';
+import slugify from 'slugify';
 
 const drawerInstance = ref(null);
 const selectedSpot = useState('selectedSpot');
 const isLoading = ref(false);
+// const slug = ref('');
+const slug = computed(() => {
+  if (selectedSpot.value) {
+    return slugify(selectedSpot.value.name, { lower: true });
+  }
+  return '';
+});
 
 async function fetchSpotComments(spotId) {
   console.log('fetching spot comments...');
@@ -128,6 +159,11 @@ watchEffect(async () => {
       isLoading.value = false;
     }
   }
+});
+
+onBeforeUnmount(() => {
+  console.log('DetailsDrawer unmounted');
+  drawerInstance.value.destroy();
 });
 
 onMounted(() => {
