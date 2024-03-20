@@ -15,6 +15,7 @@
       label="Nimimerkki"
       placeholder="Kalle Kalastaja"
       validation="required"
+      :value="createdBy"
     />
     <FormKit type="textarea" name="text" id="text" label="Kommentti" placeholder="Kommentti" validation="required" />
 
@@ -47,6 +48,8 @@ const selectedSpot = useState('selectedSpot');
 const showForm = ref(false);
 const isSubmittingForm = ref(false);
 const errorMessage = ref('');
+const storedUsername = getUserNickname();
+const createdBy = ref(storedUsername || '');
 
 const selectedSpotId = computed(() => selectedSpot.value?._id);
 
@@ -84,6 +87,9 @@ const addComment = async (formData) => {
   selectedSpot.value.comments = [data, ...selectedSpot.value.comments];
   isSubmittingForm.value = false;
   showForm.value = false;
+  if (storedUsername !== formData.createdBy) {
+    storeUserNickname(formData.createdBy);
+  }
   reset('addCommentForm');
 };
 </script>
