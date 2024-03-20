@@ -53,12 +53,24 @@
         <h3 class="text-md mt-2 font-semibold text-gray-800">Maakunta</h3>
         <p class="text-gray-600">{{ selectedSpot.province }}</p>
 
-        <h3 class="text-md font-semibold text-gray-800">Koordinaatit</h3>
+        <h3 class="text-md mt-2 font-semibold text-gray-800">Sijainti</h3>
         <div class="flex items-center space-x-2">
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[1] }}</p>
           ,
           <p class="text-gray-600">{{ selectedSpot.coordinates.coordinates[0] }}</p>
         </div>
+        <a
+          :href="
+            'https://www.google.com/maps/dir/?api=1&destination=' +
+            selectedSpot.coordinates.coordinates[1] +
+            '%2C' +
+            selectedSpot.coordinates.coordinates[0]
+          "
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-600 underline"
+          >Reittiohjeet</a
+        >
 
         <h3 class="text-md mt-2 font-semibold text-gray-800">Lisätty</h3>
         <p class="text-gray-600">{{ format(parseISO(selectedSpot.createdAt), 'd.M.yyyy', { locale: fi }) }}</p>
