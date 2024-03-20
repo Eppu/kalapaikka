@@ -4,8 +4,8 @@
       <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <!-- TODO: Replace with SVG logo once we have a proper one -->
         <span class="self-center text-2xl">🎣</span>
-        <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Kalapaikka Logo" /> -->
-        <span class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">Kalapaikka</span>
+        <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Kalakartta Logo" /> -->
+        <span class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">Kalakartta</span>
       </a>
       <button
         data-collapse-toggle="navbar-default"

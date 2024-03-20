@@ -3,7 +3,7 @@
     class="rounded-lg bg-white p-4 antialiased shadow dark:bg-gray-800 sm:flex sm:items-center sm:justify-between sm:p-6 xl:p-8"
   >
     <p class="mb-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:mb-0">
-      &copy; {{ new Date().getFullYear() }} <a href="#" class="hover:underline" target="_blank">Kalapaikka</a>
+      &copy; {{ new Date().getFullYear() }} <a href="#" class="hover:underline" target="_blank">Kalakartta</a>
     </p>
     <div class="flex items-center justify-center space-x-1">
       <a

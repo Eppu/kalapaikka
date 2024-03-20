@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Kalapaikka',
-  ogTitle: 'Kalapaikka',
+  title: 'Kalakartta',
+  ogTitle: 'Kalakartta',
   description: 'Selaa parhaita kalastuspaikkoja ja jaa vinkkejä muiden harrastajien kanssa.',
   ogDescription: 'Selaa parhaita kalastuspaikkoja ja jaa vinkkejä muiden harrastajien kanssa.',
   // ogImage: 'https://example.com/image.png',
