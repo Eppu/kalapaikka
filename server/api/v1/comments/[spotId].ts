@@ -13,9 +13,9 @@ export default defineEventHandler(async (event) => {
   }
 
   let comments = [];
-  // Get the comments for the spot
+  // Get the comments for the spot, sorted by date
   try {
-    comments = await Comment.find({ spotId });
+    comments = await Comment.find({ spotId }).sort({ createdAt: -1 }).exec();
   } catch (error) {
     console.error('Error getting comments:', error);
     return new Response('Internal Server Error', { status: 500 });

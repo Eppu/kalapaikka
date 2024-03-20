@@ -80,7 +80,8 @@ const addComment = async (formData) => {
   }
 
   const data = response.body;
-  selectedSpot.value.comments.push(data);
+  // Add the new comment as the first item in the array
+  selectedSpot.value.comments = [data, ...selectedSpot.value.comments];
   isSubmittingForm.value = false;
   showForm.value = false;
   reset('addCommentForm');
