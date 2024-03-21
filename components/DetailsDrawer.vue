@@ -123,7 +123,6 @@ import slugify from 'slugify';
 const drawerInstance = ref(null);
 const selectedSpot = useState('selectedSpot');
 const isLoading = ref(false);
-// const slug = ref('');
 const slug = computed(() => {
   if (selectedSpot.value) {
     return slugify(selectedSpot.value.name, { lower: true });

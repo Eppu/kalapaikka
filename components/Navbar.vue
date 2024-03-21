@@ -1,6 +1,6 @@
 <template>
   <nav class="border-gray-200 bg-white dark:bg-gray-900">
-    <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+    <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-4 py-2">
       <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <!-- TODO: Replace with SVG logo once we have a proper one -->
         <span class="self-center text-2xl">🎣</span>
@@ -8,6 +8,7 @@
         <span class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">Kalakartta</span>
       </a>
       <button
+        id="navbar-trigger"
         data-collapse-toggle="navbar-default"
         type="button"
         class="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 md:hidden"
@@ -30,38 +31,28 @@
           class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900 rtl:space-x-reverse"
         >
           <li>
-            <a
-              href="#"
-              class="block rounded bg-blue-700 px-3 py-2 text-white dark:text-white md:bg-transparent md:p-0 md:text-blue-700 md:dark:text-blue-500"
+            <NuxtLink
+              to="/"
+              class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+              exact-active-class="  bg-blue-700 text-white md:bg-transparent md:text-blue-700 md:dark:text-blue-500 hover:bg-blue-600"
               aria-current="page"
-              >Home</a
+              >Kartta</NuxtLink
             >
           </li>
+          <li>
+            <NuxtLink
+              to="/tietoa"
+              class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+              exact-active-class="  bg-blue-700 text-white md:bg-transparent md:text-blue-700 md:dark:text-blue-500 hover:bg-blue-600"
+              >Tietoa</NuxtLink
+            >
+          </li>
+
           <li>
             <a
               href="#"
               class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-              >About</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-              >Services</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
-              >Pricing</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block rounded px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:border-0 md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+              exact-active-class="  bg-blue-700 text-white md:bg-transparent md:text-blue-700 md:dark:text-blue-500 hover:bg-blue-600"
               >Contact</a
             >
           </li>
@@ -70,3 +61,32 @@
     </div>
   </nav>
 </template>
+<script setup lang="ts">
+import { Collapse, type CollapseOptions, type InstanceOptions, type CollapseInterface } from 'flowbite';
+
+const collapseInstance = ref<CollapseInterface | null>(null);
+
+onMounted(() => {
+  console.log('Navbar mounted');
+  const targetEl = document.getElementById('navbar-default');
+  const triggerEl = document.getElementById('navbar-trigger');
+
+  const options: CollapseOptions = {
+    onCollapse: () => {},
+    onExpand: () => {},
+    onToggle: () => {},
+  };
+  const instanceOptions: InstanceOptions = {
+    id: 'navbar-default',
+    override: true,
+  };
+
+  const collapse: CollapseInterface = new Collapse(targetEl, triggerEl, options, instanceOptions);
+
+  if (collapse && collapseInstance.value !== collapse) {
+    collapseInstance.value = collapse;
+    // We need to call collapse to make sure the initial state is correct even after navigation
+    collapseInstance.value.collapse();
+  }
+});
+</script>
