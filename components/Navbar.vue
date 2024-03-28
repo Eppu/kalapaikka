@@ -1,5 +1,5 @@
 <template>
-  <nav class="border-gray-200 bg-white dark:bg-gray-900">
+  <nav class="border-gray-200 bg-white shadow-sm backdrop-saturate-200 dark:bg-gray-900">
     <div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between px-4 py-2">
       <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
         <!-- TODO: Replace with SVG logo once we have a proper one -->
