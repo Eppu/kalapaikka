@@ -1,6 +1,9 @@
 <template>
-  <div>
+  <div class="flex min-h-screen flex-col">
     <Navbar />
-    <slot />
+    <div class="flex-1">
+      <slot />
+    </div>
+    <Footer />
   </div>
 </template>
