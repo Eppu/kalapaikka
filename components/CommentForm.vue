@@ -18,6 +18,7 @@
       :value="createdBy"
     />
     <FormKit type="textarea" name="text" id="text" label="Kommentti" placeholder="Kommentti" validation="required" />
+    <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">Älä jaa palvelussa henkilökohtaisia tietojasi.</p>
 
     <div class="flex items-center space-x-2 rounded-b">
       <button
