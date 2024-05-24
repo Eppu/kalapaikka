@@ -5,8 +5,8 @@
 </template> -->
 <template>
   <div>
+    <NuxtLoadingIndicator />
     <NuxtLayout>
-      <NuxtLoadingIndicator />
       <NuxtPage />
     </NuxtLayout>
   </div>
