@@ -28,8 +28,8 @@
           <li>Merkitä omia kalapaikkojasi kartalle ja jakaa ne muiden kanssa</li>
         </ul>
         <p>
-          Kalakartta pohjautuu myös avoimeen lähdekoodiin, joten kuka tahansa voi halutessaan osallistua sen
-          kehittämiseen. Lähdekoodi löytyy palvelun GitHub-reposta.
+          Kalakartta pohjautuu avoimeen lähdekoodiin, joten kuka tahansa voi halutessaan osallistua sen kehittämiseen.
+          Lähdekoodi löytyy palvelun GitHub-reposta.
         </p>
       </div>
     </div>

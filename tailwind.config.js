@@ -17,6 +17,10 @@ export default {
         '3/4': '75%',
       },
     },
+    fontFamily: {
+      body: ['Inter', 'sans-serif'],
+      display: ['Manrope', 'sans-serif'],
+    },
   },
   plugins: [require('flowbite/plugin')],
 };

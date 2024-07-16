@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt3-leaflet', 'nuxt-mongoose', '@formkit/nuxt', 'nuxt-security'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt3-leaflet', 'nuxt-mongoose', '@formkit/nuxt', 'nuxt-security', '@nuxt/fonts'],
   security: {
     headers: {
       // Needed for local development
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
     '/api/v1/comments/': {
       security: {
         rateLimiter: {
-          tokensPerInterval: 10,
+          tokensPerInterval: 5,
           interval: '10000',
           throwError: false,
         },
@@ -60,5 +60,10 @@ export default defineNuxtConfig({
   formkit: {
     // Experimental support for auto loading
     autoImport: false,
+  },
+  fonts: {
+    experimental: {
+      // processCSSVariables: true,
+    },
   },
 });
