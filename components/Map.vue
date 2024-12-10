@@ -76,6 +76,8 @@ const mapOptions = {
   zoomControl: false,
   attributionControl: false, // TODO: See if hiding is really necessary or not, especially on desktop
   worldCopyJump: true,
+  minZoom: 5,
+  maxZoom: 18,
 };
 
 const tooltipOptions = {

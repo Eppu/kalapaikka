@@ -1,7 +1,7 @@
 export const getZoomOffset = (zoomLevel: number) => {
   const maxZoomLevel = 18;
   const minZoomLevel = 6;
-  const maxOffset = 1.8;
+  const maxOffset = 2;
   const minOffset = 0.00048828125;
 
   if (zoomLevel < minZoomLevel) {
