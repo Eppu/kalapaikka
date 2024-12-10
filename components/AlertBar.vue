@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute z-50 flex w-full items-center rounded-lg bg-gray-50 p-4 text-sm text-gray-800 shadow-md dark:bg-gray-800 dark:text-gray-300"
+    class="absolute z-50 mt-14 flex w-full items-center rounded-lg bg-gray-50 p-4 text-sm text-gray-800 shadow-md dark:bg-gray-800 dark:text-gray-300"
     role="alert"
   >
     <svg
@@ -15,6 +15,26 @@
       />
     </svg>
     <span class="sr-only">Info</span>
-    <div><span class="font-medium">Dark alert!</span> Change a few things up and try submitting again.</div>
+    <div>
+      <span class="font-medium">Hupsista! 😱 </span> {{ message }}. Kokeile
+      <button
+        class="text-blue-500 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-500"
+        @click="refreshPage"
+      >
+        ladata sivu uudestaan
+      </button>
+      .
+    </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+  message: string;
+  type: 'info' | 'error';
+}>(); // Define the props for the component
+
+const refreshPage = () => {
+  window.location.reload();
+};
+</script>

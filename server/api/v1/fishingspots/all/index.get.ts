@@ -11,12 +11,11 @@ interface FishingSpot {
 }
 
 export default defineEventHandler(async (event) => {
-  const fishingSpots = (await FishingSpot.find()) as FishingSpot[];
-
-  // // Flip the coordinates back to the format the client expects
-  // fishingSpots.forEach((spot) => {
-  //   spot.coordinates.coordinates = [spot.coordinates.coordinates[1], spot.coordinates.coordinates[0]];
-  // });
-
-  return fishingSpots;
+  try {
+    const fishingSpots = (await FishingSpot.find()) as FishingSpot[];
+    return new Response(JSON.stringify(fishingSpots), { status: 200 });
+  } catch (error) {
+    console.error('Error getting fishing spots:', error);
+    throw createError({ statusCode: 500, message: 'Failed to get fishing spots' });
+  }
 });

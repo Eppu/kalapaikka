@@ -1,5 +1,8 @@
 <template>
   <div class="h-full w-full">
+    <div v-if="errorMessage" class="absolute left-0 right-0 top-0">
+      <AlertBar :message="errorMessage" type="error" />
+    </div>
     <DetailsDrawer />
     <Modal />
     <LMap
@@ -67,6 +70,7 @@ import AlertBar from './AlertBar.vue';
 
 const zoom = ref(6);
 const map = ref(null);
+const errorMessage = ref(null);
 
 const mapOptions = {
   zoomControl: false,
@@ -115,6 +119,10 @@ onMounted(async () => {
   // Fetch fishing spots from your API endpoint
   try {
     const response = await fetch('/api/v1/fishingspots/all');
+    if (!response.ok) {
+      errorMessage.value = 'Kalapaikkojen haussa kävi virhe';
+      return;
+    }
     const data = await response.json();
     fishingSpots.value = data;
   } catch (error) {
