@@ -5,60 +5,62 @@
     </div>
     <DetailsDrawer />
     <Modal />
-    <LMap
-      ref="map"
-      :zoom="zoom"
-      :center="[64.89092, 25.92773]"
-      :options="mapOptions"
-      className="z-0"
-      @click="handleMapClick($event)"
-    >
-      <LControlZoom position="bottomright" />
-      <!-- TODO: Consider adding these to the tile layer to limit how much of the map is rendered -->
-      <!-- :no-wrap="true"
+    <client-only>
+      <LMap
+        ref="map"
+        :zoom="zoom"
+        :center="[64.89092, 25.92773]"
+        :options="mapOptions"
+        className="z-0"
+        @click="handleMapClick($event)"
+      >
+        <LControlZoom position="bottomright" />
+        <!-- TODO: Consider adding these to the tile layer to limit how much of the map is rendered -->
+        <!-- :no-wrap="true"
         :bounds="[
           [-90, -180],
           [90, 180],
         ]" -->
-      <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base" />
-      <LMarker
-        v-for="spot in fishingSpots"
-        :key="spot._id"
-        :lat-lng="[spot.coordinates.coordinates[1], spot.coordinates.coordinates[0]]"
-        @click="() => handleMarkerClick(spot)"
-        ref="markers"
-      >
-        <LTooltip :options="tooltipOptions">
-          <div>
-            <h3
-              className="
+        <LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" layer-type="base" />
+        <LMarker
+          v-for="spot in fishingSpots"
+          :key="spot._id"
+          :lat-lng="[spot.coordinates.coordinates[1], spot.coordinates.coordinates[0]]"
+          @click="() => handleMarkerClick(spot)"
+          ref="markers"
+        >
+          <LTooltip :options="tooltipOptions">
+            <div>
+              <h3
+                className="
             text-md
             font-semibold
             text-gray-800"
-            >
-              {{ spot.name }}
-            </h3>
-          </div>
-        </LTooltip>
-      </LMarker>
+              >
+                {{ spot.name }}
+              </h3>
+            </div>
+          </LTooltip>
+        </LMarker>
 
-      <!-- Draw a marker when the user clicks the map -->
-      <LMarker v-if="clickedSpot" :lat-lng="clickedSpot.coordinates.coordinates">
-        <LIcon iconUrl="/img/marker-icon-red.png" :icon-size="[25, 41]" :icon-anchor="[12.5, 41]" />
-        <LTooltip :options="{ permanent: true, direction: 'top', offset: [0, -41] }">
-          <div>
-            <h3
-              className="
+        <!-- Draw a marker when the user clicks the map -->
+        <LMarker v-if="clickedSpot" :lat-lng="clickedSpot.coordinates.coordinates">
+          <LIcon iconUrl="/img/marker-icon-red.png" :icon-size="[25, 41]" :icon-anchor="[12.5, 41]" />
+          <LTooltip :options="{ permanent: true, direction: 'top', offset: [0, -41] }">
+            <div>
+              <h3
+                className="
             text-md
             font-semibold
             text-gray-800"
-            >
-              Uusi kalapaikka
-            </h3>
-          </div>
-        </LTooltip>
-      </LMarker>
-    </LMap>
+              >
+                Uusi kalapaikka
+              </h3>
+            </div>
+          </LTooltip>
+        </LMarker>
+      </LMap>
+    </client-only>
   </div>
 </template>
 
