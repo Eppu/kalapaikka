@@ -66,7 +66,7 @@ export default defineNuxtConfig({
 
   formkit: {
     // Experimental support for auto loading
-    autoImport: false,
+    autoImport: false, // for some reason I get $this is undefined errors if this is set to true
   },
 
   fonts: {
