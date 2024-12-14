@@ -1,3 +1,4 @@
+import plugin from 'flowbite/plugin';
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -22,5 +23,5 @@ export default {
       display: ['Manrope', 'sans-serif'],
     },
   },
-  plugins: [require('flowbite/plugin')],
+  plugins: [plugin],
 };
