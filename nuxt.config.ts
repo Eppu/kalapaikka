@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   security: {
     headers: {
       // Needed for local development
-      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'require-corp',
+      crossOriginEmbedderPolicy: process.env.NODE_ENV === 'development' ? 'unsafe-none' : 'credentialless', // 'require-corp',  // 'unsafe-none',
       // Allow Leaflet map tiles
       contentSecurityPolicy: {
         'img-src': ["'self'", 'data:', 'https://*.tile.openstreetmap.org', 'https://*.tile.openweathermap.org'],
