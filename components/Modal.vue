@@ -32,7 +32,14 @@
 
         <!-- Modal body -->
         <div class="space-y-6 p-6 pt-4">
-          <FormKit type="form" id="addFishingSpotForm" submit-label="Lisää" :actions="false" @submit="addFishingSpot">
+          <FormKit
+            ref="spotForm"
+            type="form"
+            id="addFishingSpotForm"
+            submit-label="Lisää"
+            :actions="false"
+            @submit="addFishingSpot"
+          >
             <FormKit
               type="text"
               name="name"
@@ -58,13 +65,11 @@
         <div
           class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600 rtl:space-x-reverse"
         >
-          <!-- TODO: Set up styling using the classes on the commented buttons below -->
-          <!-- <FormKit type="submit">Lisää</FormKit> -->
-          <!-- <FormKit type="button" @click="hide">Peruuta</FormKit> -->
           <button
-            @click="this.$formkit.submit('addFishingSpotForm')"
-            type="button"
-            class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            @click="submitForm"
+            type="submit"
+            class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            :disabled="isSubmittingForm"
           >
             Lisää
           </button>
@@ -82,7 +87,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { Modal } from 'flowbite';
 import { provinceOptions } from '~/utils/formUtils';
 import { reset } from '@formkit/core';
@@ -90,9 +95,10 @@ import { reset } from '@formkit/core';
 const modalInstance = ref(null);
 const clickedSpot = useState('clickedSpot');
 const errorMessage = ref('');
+const spotForm = ref(null);
+const isSubmittingForm = ref(false);
 
 watch(clickedSpot, (newValue) => {
-  console.log('clickedSpot changed', newValue);
   if (newValue) {
     modalInstance.value.show();
   }
@@ -102,44 +108,61 @@ const hide = () => {
   modalInstance.value.hide();
 };
 
-const addFishingSpot = async (values) => {
-  console.log('Adding fishing spot', values);
-  errorMessage.value = '';
-  const { name, description, province } = values;
-  const response = await $fetch('/api/v1/fishingspots', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: name,
-      description: description,
-      coordinates: {
-        type: 'Point',
-        coordinates: clickedSpot.value.coordinates.coordinates,
-      },
-      province: province,
-    }),
-  });
-
-  console.log('modal response', response);
-  if (response.statusCode !== 201) {
-    console.error('Failed to add fishing spot', response);
-    response.statusCode === 429
-      ? (errorMessage.value = 'Lisäät kalapaikkoja liian nopeasti! Yritä hetken kuluttua uudelleen.')
-      : (errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.');
-    return;
+// It would be nicer to just use the native Formkit submit method, but I don't feel like rebuilding the styles of the form right now.
+async function submitForm() {
+  isSubmittingForm.value = true;
+  try {
+    const node = spotForm.value.node;
+    node.submit();
+  } catch (error) {
+    console.error('Form submission error:', error);
+  } finally {
+    isSubmittingForm.value = false;
   }
+}
 
-  const newSpot = response.body;
-  const fishingSpots = useState('fishingSpots');
-  fishingSpots.value.push(newSpot);
-  modalInstance.value.hide();
-  reset('addFishingSpotForm');
+const addFishingSpot = async (values) => {
+  isSubmittingForm.value = true;
+  try {
+    errorMessage.value = '';
+    const { name, description, province } = values;
+    const response = await $fetch('/api/v1/fishingspots', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        coordinates: {
+          type: 'Point',
+          coordinates: clickedSpot.value.coordinates.coordinates,
+        },
+        province: province,
+      }),
+    });
+
+    if (response.statusCode !== 201) {
+      response.statusCode === 429
+        ? (errorMessage.value = 'Lisäät kalapaikkoja liian nopeasti! Yritä hetken kuluttua uudelleen.')
+        : (errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.');
+      return;
+    }
+
+    const newSpot = response.body;
+    const fishingSpots = useState('fishingSpots');
+    fishingSpots.value.push(newSpot);
+    modalInstance.value.hide();
+    reset('addFishingSpotForm');
+  } catch (error) {
+    console.error('Failed to add fishing spot:', error);
+    errorMessage.value = 'Kalapaikan lisääminen epäonnistui. Yritä uudelleen hetken kuluttua.';
+  } finally {
+    isSubmittingForm.value = false;
+  }
 };
 
 onMounted(() => {
-  console.log('Modal mounted');
   const targetEl = document.getElementById('modalEl');
   const modalCloseButton = document.getElementById('modal-close-button');
 
@@ -149,16 +172,11 @@ onMounted(() => {
     backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
     closable: true,
     onHide: () => {
-      console.log('modal is hidden');
       clickedSpot.value = null;
       errorMessage.value = null;
     },
-    onShow: () => {
-      console.log('modal is shown');
-    },
-    onToggle: () => {
-      console.log('modal has been toggled');
-    },
+    onShow: () => {},
+    onToggle: () => {},
   };
 
   if (targetEl) {

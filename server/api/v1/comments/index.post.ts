@@ -29,6 +29,8 @@ export default defineEventHandler(async (event) => {
 
     const savedComment = await newComment.save();
 
+    console.log('Successfully created a new comment', savedComment);
+
     return {
       statusCode: 201,
       body: savedComment,

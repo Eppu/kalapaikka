@@ -20,15 +20,21 @@
     <FormKit type="textarea" name="text" id="text" label="Kommentti" placeholder="Kommentti" validation="required" />
     <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">Älä jaa palvelussa henkilökohtaisia tietojasi.</p>
 
-    <div class="flex items-center space-x-2 rounded-b">
-      <button
-        @click="this.$formkit.submit('addCommentForm')"
-        type="button"
-        class="rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    <div class="mb-2 flex items-center space-x-2">
+      <FormKit
+        type="submit"
+        class=""
+        outer-class="$reset max-w-[77px]"
+        :classes="{
+          outer: 'max-w-[77px]',
+          input:
+            '$reset rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 disabled:dark:bg-blue-700',
+        }"
         :disabled="isSubmittingForm"
       >
         Lisää
-      </button>
+      </FormKit>
+
       <button
         @click="showForm = false"
         type="button"
