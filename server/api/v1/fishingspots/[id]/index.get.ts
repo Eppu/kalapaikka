@@ -18,8 +18,12 @@ export default defineEventHandler(async (event) => {
   // Get the spot
   try {
     spot = await FishingSpot.findById(id);
+    // throw new Error('Test error');
   } catch (error) {
     console.error('Error getting spot:', error);
+    // if (error.name === 'MongoNetworkError' || error.message.includes('timed out')) {
+    //   return new Response('Database connection error. Please try again later.', { status: 503 });
+    // }
     return new Response('Internal Server Error', { status: 500 });
   }
 
@@ -32,6 +36,9 @@ export default defineEventHandler(async (event) => {
     comments = await Comment.find({ spotId: id }).sort({ createdAt: -1 }).exec();
   } catch (error) {
     console.error('Error getting comments:', error);
+    // if (error.name === 'MongoNetworkError' || error.message.includes('timed out')) {
+    //   return new Response('Database connection error. Please try again later.', { status: 503 });
+    // }
     return new Response('Internal Server Error', { status: 500 });
   }
 
