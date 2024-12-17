@@ -1,4 +1,5 @@
 import { CreatedByType, FishingSpot } from '../../../models/spot.model';
+import axios from 'axios';
 
 export default defineEventHandler(async (event) => {
   try {
@@ -11,8 +12,6 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    console.log('body:', body);
-
     // Check if body includes required fields
     if (!body.name || !body.coordinates) {
       return {
@@ -21,13 +20,26 @@ export default defineEventHandler(async (event) => {
       };
     }
 
-    const { name, description, coordinates, province } = body;
+    const { name, description, coordinates } = body;
 
     // Flip coordinates to match GeoJSON format
     const flippedCoordinates = {
       ...coordinates,
       coordinates: [coordinates.coordinates[1], coordinates.coordinates[0]],
     };
+
+    // Reverse geocode to get the province. We use OpenStreetMap's Nominatim API for this.
+    // We also set the 'accept-language' parameter to 'fi' to get the response in Finnish.
+    const response = await axios.get('https://nominatim.openstreetmap.org/reverse', {
+      params: {
+        lat: flippedCoordinates.coordinates[1],
+        lon: flippedCoordinates.coordinates[0],
+        format: 'json',
+        'accept-language': 'fi',
+      },
+    });
+
+    const province = response.data.address.state || 'Muu';
 
     const createdBy = CreatedByType.USER;
 

@@ -49,14 +49,6 @@
               validation="required"
             />
             <FormKit type="textarea" name="description" id="description" label="Kuvaus" placeholder="Kuvaus" />
-            <FormKit
-              type="select"
-              name="province"
-              label="Maakunta"
-              placeholder="Maakunta"
-              :options="provinceOptions"
-              validation="required"
-            />
           </FormKit>
           <p v-if="errorMessage" class="text-sm text-red-600 dark:text-red-400">{{ errorMessage }}</p>
         </div>
@@ -89,7 +81,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import { Modal } from 'flowbite';
-import { provinceOptions } from '~/utils/formUtils';
 import { reset } from '@formkit/core';
 
 const modalInstance = ref(null);
@@ -125,7 +116,7 @@ const addFishingSpot = async (values) => {
   isSubmittingForm.value = true;
   try {
     errorMessage.value = '';
-    const { name, description, province } = values;
+    const { name, description } = values;
     const response = await $fetch('/api/v1/fishingspots', {
       method: 'POST',
       headers: {
@@ -138,7 +129,6 @@ const addFishingSpot = async (values) => {
           type: 'Point',
           coordinates: clickedSpot.value.coordinates.coordinates,
         },
-        province: province,
       }),
     });
 

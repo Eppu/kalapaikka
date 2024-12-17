@@ -34,18 +34,18 @@ export default defineNuxtConfig({
     '/api/v1/comments/': {
       security: {
         rateLimiter: {
-          tokensPerInterval: 5,
+          tokensPerInterval: process.env.NODE_ENV === 'development' ? 1000 : 20,
           interval: '10000',
-          throwError: false,
+          throwError: true,
         },
       },
     },
     '/api/v1/fishingspots/': {
       security: {
         rateLimiter: {
-          tokensPerInterval: 3,
+          tokensPerInterval: process.env.NODE_ENV === 'development' ? 1000 : 10,
           interval: '10000',
-          throwError: false,
+          throwError: true,
         },
       },
     },

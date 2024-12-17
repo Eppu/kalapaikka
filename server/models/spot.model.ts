@@ -6,7 +6,7 @@ export enum CreatedByType {
 }
 
 export enum Province {
-  AHVENANMAA = 'Ahvenanmaa',
+  AHVENANMAA = 'Ahvenanmaan maakunta',
   ETELÄ_KARJALA = 'Etelä-Karjala',
   ETELÄ_POHJANMAA = 'Etelä-Pohjanmaa',
   ETELÄ_SAVO = 'Etelä-Savo',
@@ -50,7 +50,7 @@ const fishingSpotSchema = new mongoose.Schema(
     },
     province: {
       type: String,
-      enum: Object.values(Province),
+      // enum: Object.values(Province),
       required: true,
     },
     createdBy: {

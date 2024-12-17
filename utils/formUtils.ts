@@ -1,7 +1,8 @@
+// Not currently in use, but could be used for e.g. search filters in the future
 export const provinceOptions = [
   {
-    label: 'Ahvenanmaa',
-    value: 'Ahvenanmaa',
+    label: 'Ahvenanmaan maakunta',
+    value: 'Ahvenanmaan maakunta',
   },
   {
     label: 'Etelä-Karjala',
